@@ -132,7 +132,7 @@ export const action = async ({request, params}) => {
     beginDate: formData.get('date')
   };
   console.log(payload);
-  let url = `${EVENT_URL}/events`;
+  let url = EVENT_URL;
   if(request.method === 'PATCH') {
     url += `/${params.eventId}`;
   }
