@@ -1,6 +1,7 @@
 import React from 'react';
 import {redirect, useLoaderData, useRouteLoaderData} from "react-router-dom";
 import EventItem from "../components/EventItem";
+import {EVENT_URL} from "../config/host-config";
 
 const EventDetail = () => {
 
@@ -20,7 +21,7 @@ export const loader = async ({ params }) => {
   const {eventId: id} = params;
 
   // use 로 시작하는 함수인 리액트훅은 컴포넌트 내부에서만 사용가능 ->  id, setEv 사용 불가
-  const response = await fetch(`http://localhost:8282/events/${id}`);
+  const response = await fetch(`${EVENT_URL}/${id}`);
 
   if(!response.ok) {
     // 예외처리
@@ -33,7 +34,7 @@ export const loader = async ({ params }) => {
 // 실제로 버튼이 있는 곳으로 이동 (EventItem.js)
 export const action = async ({params}) => {
     // if(!window.confirm('정말 삭제하시겠습니까?')) return;
-  const response = await fetch(`http://localhost:8282/events/${params.eventId}`, {
+  const response = await fetch(`${EVENT_URL}/${params.eventId}`, {
           method: 'DELETE'
   });
 
