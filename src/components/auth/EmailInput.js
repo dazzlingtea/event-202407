@@ -22,7 +22,7 @@ const EmailInput = () => {
 
   // 이메일 검증 후속 처리
   const checkEmail = async (email) => {
-    if(!emailValid) {
+    if(!validateEmail(email)) {
       // 에러메시지 세팅
       setError('이메일 형식이 유효하지 않습니다.');
       return;
