@@ -5,7 +5,6 @@ const Home = () => {
   console.log('Home 실행!');
   return (
     <>
-      <h1>My Home Page</h1>
       <Outlet />
     </>
   );
