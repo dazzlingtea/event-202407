@@ -1,7 +1,7 @@
 import React, {useEffect, useRef, useState} from 'react';
 import styles from './SignUpForm.module.scss';
 
-const PasswordInput = (onSuccess) => {
+const PasswordInput = ({ onSuccess }) => {
 
   const passwordRef = useRef();
 

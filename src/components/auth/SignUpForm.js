@@ -49,8 +49,11 @@ const SignUpForm = () => {
 
   // 서버에 회원가입 완료 요청하기
   const submitHandler = async (e) => {
-
     e.preventDefault();
+    console.log('form submit: {} / {} ', enteredEmail, passwordIsValid)
+    if(!enteredEmail && !passwordIsValid) {
+      return;
+    }
     const payload = {
       email: enteredEmail,
       password: enteredPassword
@@ -71,6 +74,7 @@ const SignUpForm = () => {
   };
 
   useEffect(() => {
+    console.log('enteredEmail: ',enteredEmail, ' passwordIsValid: ', passwordIsValid );
     // 활성화 여부 감시
     const isActive = enteredEmail && passwordIsValid;
     setActiveButton(isActive);
