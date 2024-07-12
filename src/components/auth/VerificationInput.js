@@ -14,10 +14,23 @@ const VerificationInput = ({email}) => {
   // 에러메시지 저장
   const [error, setError] = useState('');
 
+  // 타이머 시간
+  const [timer, setTimer] = useState(300); //300초 = 5분
+
 
   useEffect(() => {
     // 처음엔 첫번째 칸에 포커싱
     inputsRef.current[0].focus();
+
+    // 타이머 설정
+    const intervalId = setInterval(()=> {
+      setTimer(prevTime => prevTime > 0 ? prevTime - 1 : 0);
+    }, 1000);
+
+    // 타이머 리셋
+    return () => {
+      clearInterval(intervalId);
+    };
   }, []);
 
   // 다음 칸으로 포커스를 이동하는 함수
@@ -40,6 +53,8 @@ const VerificationInput = ({email}) => {
       setError('유효하지 않거나 만료된 코드입니다. 인증코드를 재발송합니다.');
       // 기존 인증코드 상태값 비우기
       setCodes(Array(4).fill(''));
+      // 타이머 리셋
+      setTimer(300);
 
       inputsRef.current[0].focus();
       return;
@@ -90,7 +105,10 @@ const VerificationInput = ({email}) => {
           ))
         }
       </div>
-        { error && <p className={styles.errorMessage}>{error}</p> }
+      <div className={styles.timer}>
+        {`${'0' + Math.floor(timer / 60)}:${('0' + (timer % 60)).slice(-2)}`}
+      </div>
+      { error && <p className={styles.errorMessage}>{error}</p> }
     </>
   );
 };
