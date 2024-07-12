@@ -1,6 +1,7 @@
 import React, {useEffect, useRef, useState} from 'react';
 import styles from './SignUpForm.module.scss';
 import {AUTH_URL} from "../../config/host-config";
+import { debounce } from 'lodash';
 
 const EmailInput = () => {
 
@@ -19,7 +20,7 @@ const EmailInput = () => {
   };
 
   // 이메일 검증 후속 처리
-  const checkEmail = async (email) => {
+  const checkEmail = debounce(async (email) => {
     // 패턴 검사
     if(!validateEmail(email)) {
       // 에러메시지 세팅
@@ -38,7 +39,7 @@ const EmailInput = () => {
         setError('이메일이 중복되었습니다.');
       }
     // }
-  };
+  }, 1500);
 
   const changeHandler = e => {
     const email = e.target.value;
