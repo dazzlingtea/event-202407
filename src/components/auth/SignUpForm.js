@@ -3,6 +3,7 @@ import styles from './SignUpForm.module.scss'
 import EmailInput from "./EmailInput";
 import VerificationInput from "./VerificationInput";
 import ProgressBar from "../ProgressBar";
+import PasswordInput from "./PasswordInput";
 
 const SignUpForm = () => {
 
@@ -18,15 +19,20 @@ const SignUpForm = () => {
   // 이메일 중복확인이 끝났을 때 호출될 함수
   const emailSuccessHandler = (email) => {
     // console.log('email 중복확인 검증 끝!');
-    setSuccess(true);
     setEnteredEmail(email);
 
+    nextStep();
+  };
+
+  const nextStep = () => {
+    setSuccess(true);
     setTimeout(() => {
-      setStep(2);
+      setStep(prevStep => prevStep + 1);
       setSuccess(false);  // 다음단계로 넘어가면 다시 false로
     }, 1500);
 
-  };
+  }
+
 
   return (
     <div className={styles.signupForm}>
@@ -34,8 +40,14 @@ const SignUpForm = () => {
 
         { step === 1 && <EmailInput onSuccess={emailSuccessHandler}/> }
 
-        { step === 2 && <VerificationInput email={enteredEmail}/> }
+        { step === 2 &&
+          <VerificationInput
+            email={enteredEmail}
+            onSuccess={() => nextStep()}
+          />
+        }
 
+        { step === 3 && <PasswordInput /> }
 
         { success && <ProgressBar /> }
 

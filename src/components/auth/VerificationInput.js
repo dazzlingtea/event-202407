@@ -3,7 +3,7 @@ import styles from './SignUpForm.module.scss';
 import {debounce} from "lodash";
 import {AUTH_URL} from "../../config/host-config";
 
-const VerificationInput = ({email}) => {
+const VerificationInput = ({email, onSuccess}) => {
 
   // 여러 개의 컴포넌트에 ref를 거는 방법
   const inputsRef = useRef([]);
@@ -59,6 +59,9 @@ const VerificationInput = ({email}) => {
       inputsRef.current[0].focus();
       return;
     }
+    // 검증 성공 시
+    onSuccess();
+    setError('');
 
   }, 1500);
 
@@ -77,7 +80,8 @@ const VerificationInput = ({email}) => {
 
     // 입력한 숫자 합치기
     // join() : 배열 안에 있는 요소를 전부 연결
-    if(updatedCodes.length === 4 && index === 4) {
+    // if(updatedCodes.length === 4 && index === 4) {
+    if(!updatedCodes.includes('') && index === 4) {
       const code = updatedCodes.join('');
       // console.log('배열 join 결과: ', code);
 
