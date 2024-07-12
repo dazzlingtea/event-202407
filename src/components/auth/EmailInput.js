@@ -3,7 +3,7 @@ import styles from './SignUpForm.module.scss';
 import {AUTH_URL} from "../../config/host-config";
 import { debounce } from 'lodash';
 
-const EmailInput = () => {
+const EmailInput = ({ onSuccess }) => {
 
   const inputRef = useRef();
 
@@ -29,16 +29,20 @@ const EmailInput = () => {
     }
 
     // 중복 검사 (이메일형식 유효하다면)
-    // if(emailValid) {
-      const response = await fetch(`${AUTH_URL}/check-email?email=${email}`);
-      // console.log('res: ', response);
-      const flag = await response.json();
-      // console.log('flag: ', flag);
-      if(flag) {
-        setEmailValid(false);
-        setError('이메일이 중복되었습니다.');
-      }
-    // }
+    const response = await fetch(`${AUTH_URL}/check-email?email=${email}`);
+    // console.log('res: ', response);
+    const flag = await response.json();
+    // console.log('flag: ', flag);
+    if(flag) {
+      setEmailValid(false);
+      setError('이메일이 중복되었습니다.');
+      return;
+    }
+    // 이메일 중복확인 끝
+    setEmailValid(true);
+    onSuccess();
+
+
   }, 1500);
 
   const changeHandler = e => {
