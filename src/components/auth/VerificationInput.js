@@ -11,6 +11,18 @@ const VerificationInput = () => {
     inputsRef.current[0].focus();
   }, []);
 
+  // 다음 칸으로 포커스를 이동하는 함수
+  const focusNextInput = (index) => {
+    if(index < inputsRef.current.length) {
+      inputsRef.current[index].focus();
+    }
+  };
+
+  const changeHandler = (index) => {
+    // 입력이 끝나면 다음 칸으로 포커스 이동
+    focusNextInput(index);
+  }
+
   return (
     <>
      <p>Step 2: 이메일로 전송된 인증번호 4자리를 입력해주세요. </p>
@@ -23,6 +35,7 @@ const VerificationInput = () => {
               type="text"
               maxLength={1}
               className={styles.codeInput}
+              onChange={(e) => changeHandler(index+1)}
             />
           ))
         }
