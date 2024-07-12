@@ -6,8 +6,6 @@ const EmailInput = () => {
 
   const inputRef = useRef();
 
-  // 입력한 이메일
-  const [enteredEmail, setEnteredEmail] = useState('');
   // 검증 여부
   const [emailValid, setEmailValid] = useState(false);
   // 에러 메시지
@@ -22,6 +20,7 @@ const EmailInput = () => {
 
   // 이메일 검증 후속 처리
   const checkEmail = async (email) => {
+    // 패턴 검사
     if(!validateEmail(email)) {
       // 에러메시지 세팅
       setError('이메일 형식이 유효하지 않습니다.');
@@ -30,10 +29,10 @@ const EmailInput = () => {
 
     // 중복 검사 (이메일형식 유효하다면)
     // if(emailValid) {
-      const response = await fetch(`${AUTH_URL}/check-email?email=${enteredEmail}`);
-      console.log('res: ', response);
+      const response = await fetch(`${AUTH_URL}/check-email?email=${email}`);
+      // console.log('res: ', response);
       const flag = await response.json();
-      console.log('flag: ', flag);
+      // console.log('flag: ', flag);
       if(flag) {
         setEmailValid(false);
         setError('이메일이 중복되었습니다.');
@@ -43,11 +42,11 @@ const EmailInput = () => {
 
   const changeHandler = e => {
     const email = e.target.value;
-    const isValid = validateEmail(email);
+    // const isValid = validateEmail(email);
     // console.log('isValid: ', isValid);
 
-    setEnteredEmail(email);
-    setEmailValid(isValid);
+    // setEnteredEmail(email);
+    // setEmailValid(isValid); ---> checkEmail에서 하므로 주석처리
 
     // 이메일 검증 후속처리
     checkEmail(email); // 상태변수 한 템포 늦어서 바로 전달
