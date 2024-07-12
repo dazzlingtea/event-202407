@@ -1,7 +1,9 @@
 import React, {useEffect, useRef, useState} from 'react';
 import styles from './SignUpForm.module.scss';
+import {debounce} from "lodash";
+import {AUTH_URL} from "../../config/host-config";
 
-const VerificationInput = () => {
+const VerificationInput = ({email}) => {
 
   // 여러 개의 컴포넌트에 ref를 거는 방법
   const inputsRef = useRef([]);
@@ -22,9 +24,15 @@ const VerificationInput = () => {
   };
 
   // 서버에 검증 요청 보내기
-  const verifyCode = async (code) => {
-    console.log('요청전송!: ', code);
-  };
+  const verifyCode = debounce(async (code) => {
+    // console.log('요청전송!: ', code);
+
+    const response = await fetch(`${AUTH_URL}/code?email=${email}&code=${code}`)
+    const flag = await response.json();
+
+    console.log('코드검증: ', flag);
+
+  }, 1500);
 
 
   const changeHandler = (index, inputValue) => {
