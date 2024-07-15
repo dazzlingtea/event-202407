@@ -63,8 +63,8 @@ const SignUpForm = () => {
 
     const response = await fetch(`${AUTH_URL}/join`, {
       method: 'POST',
-      headers: {'Content-Type' : 'application/json'},
-      body: payload
+      headers: { 'Content-Type' : 'application/json' },
+      body: JSON.stringify(payload)
     });
     const result = await response.text();
     if(result) {
