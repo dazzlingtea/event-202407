@@ -1,5 +1,5 @@
 import React from 'react';
-import {Form, Link, useActionData} from 'react-router-dom';  // Link 컴포넌트 추가
+import {Form, Link, redirect, useActionData} from 'react-router-dom';  // Link 컴포넌트 추가
 import styles from './LoginForm.module.scss';
 import {AUTH_URL} from "../../config/host-config";
 
@@ -69,6 +69,15 @@ export const loginAction = async ({request}) => {
 
     return errorText;
   }
+
+  // 성공한 경우
+  const responseData = await response.json();
+  console.log(responseData);
+
+  // 브라우저 저장소 (localStorage : 쿠키, sessionStorage: 세션)
+  localStorage.setItem('userData', JSON.stringify(responseData));
+
+  return redirect('/');
 
 };
 
