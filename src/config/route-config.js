@@ -14,6 +14,7 @@ import Events from "../pages/Events";
 import WelcomePage from "../pages/WelcomePage";
 import SignUpPage from "../pages/SignUpPage";
 import {loginAction} from "../components/auth/LoginForm";
+import {userDataLoader} from "./auth";
 
 // 라우터 설정
 
@@ -70,6 +71,8 @@ export const router = createBrowserRouter([
     path: '/',
     element: <RootLayout />,
     errorElement: <ErrorPage />,
+    loader: userDataLoader,
+    id: 'user-data',
     children: [
       {
         path: '/',

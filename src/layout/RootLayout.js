@@ -1,9 +1,12 @@
 import React from 'react';
 import MainNavigation from "./MainNavigation";
-import {Outlet} from 'react-router-dom';
+import {Outlet, useLoaderData} from 'react-router-dom';
 
 
 const RootLayout = () => {
+
+  const data = useLoaderData(); // 이걸 MainNavigation 에서도 사용 가능
+
   return (
     <>
       <MainNavigation />
