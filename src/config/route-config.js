@@ -14,7 +14,7 @@ import Events from "../pages/Events";
 import WelcomePage from "../pages/WelcomePage";
 import SignUpPage from "../pages/SignUpPage";
 import {loginAction} from "../components/auth/LoginForm";
-import {userDataLoader} from "./auth";
+import {authCheckLoader, userDataLoader} from "./auth";
 import {logoutAction} from "../pages/Logout";
 
 // 라우터 설정
@@ -87,6 +87,7 @@ export const router = createBrowserRouter([
       {
         path: 'events',
         element: <EventLayout />,
+        loader: authCheckLoader,
         children: eventsRouter
       },
     ]

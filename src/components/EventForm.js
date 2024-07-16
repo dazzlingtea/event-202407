@@ -128,9 +128,10 @@ export const action = async ({request, params}) => {
 
   const payload = {
     title: formData.get('title'),
-    desc: formData.get('description') ,
-    imageUrl: formData.get('image') ,
-    beginDate: formData.get('date')
+    desc: formData.get('description'),
+    imageUrl: formData.get('image'),
+    beginDate: formData.get('date'),
+
   };
   console.log(payload);
   let url = EVENT_URL;
