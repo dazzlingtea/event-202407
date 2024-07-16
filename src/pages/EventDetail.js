@@ -2,6 +2,7 @@ import React from 'react';
 import {redirect, useLoaderData, useRouteLoaderData} from "react-router-dom";
 import EventItem from "../components/EventItem";
 import {EVENT_URL} from "../config/host-config";
+import {getUserToken} from "../config/auth";
 
 const EventDetail = () => {
 
@@ -21,7 +22,10 @@ export const loader = async ({ params }) => {
   const {eventId: id} = params;
 
   // use 로 시작하는 함수인 리액트훅은 컴포넌트 내부에서만 사용가능 ->  id, setEv 사용 불가
-  const response = await fetch(`${EVENT_URL}/${id}`);
+  const response = await fetch(`${EVENT_URL}/${id}`, {
+    method: 'GET',
+    headers: { 'Authorization' : 'Bearer ' + getUserToken() },
+  });
 
   if(!response.ok) {
     // 예외처리
@@ -35,7 +39,8 @@ export const loader = async ({ params }) => {
 export const action = async ({params}) => {
     // if(!window.confirm('정말 삭제하시겠습니까?')) return;
   const response = await fetch(`${EVENT_URL}/${params.eventId}`, {
-          method: 'DELETE'
+    method: 'DELETE',
+    headers: { 'Authorization' : 'Bearer ' + getUserToken() },
   });
 
   if(!response.ok){
