@@ -23,7 +23,7 @@ const WelcomePage = () => {
   return (
     <>
       { !userData && <LoginForm/> }
-      { userData && <Main/> }
+      { userData && <Main /> }
     </>
   );
 };
