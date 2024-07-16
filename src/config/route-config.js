@@ -13,13 +13,15 @@ import { action as manipulateAction }
 import Events from "../pages/Events";
 import WelcomePage from "../pages/WelcomePage";
 import SignUpPage from "../pages/SignUpPage";
+import {loginAction} from "../components/auth/LoginForm";
 
 // 라우터 설정
 
 const homeRouter = [
   {
     index: true,
-    element: <WelcomePage />
+    element: <WelcomePage />,
+    action: loginAction
   }, // 웰컴페이지 (로그인 화면 or 로그인완료화면)
   {
     path: 'sign-up',
