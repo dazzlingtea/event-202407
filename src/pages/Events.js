@@ -5,8 +5,12 @@ import {EVENT_URL} from "../config/host-config";
 
 // npm install loadsh
 import { debounce, throttle } from 'lodash';
+import {useRouteLoaderData} from "react-router-dom";
 
 const Events = () => {
+
+  // 로컬스토리지에서 토큰 가져오기
+  const {token} = useRouteLoaderData('user-data');
 
   // 이벤트 목록 아래 박스 참조
   const skeletonBoxRef = useRef();
@@ -37,7 +41,9 @@ const Events = () => {
     console.log('start loading...');
     setLoading(true);
 
-    const response = await fetch(`${EVENT_URL}/page/${currentPage}?sort=date`);
+    const response = await fetch(`${EVENT_URL}/page/${currentPage}?sort=date`, {
+      headers: {'Authorization': 'Bearer '+ token}
+    });
     const { events: loadedEvents, totalCount } = await response.json();
 
     console.log('loaded: ', {loadedEvents, totalCount, len:loadedEvents.length});
@@ -62,30 +68,6 @@ const Events = () => {
     setSkeletonCount(skeletonCnt);
   };
 
-  // 초기 이벤트 1페이지 목록 가져오기
-  // useEffect(() => {
-  //   loadEvents();
-  // }, []);
-
-  // 스크롤 핸들러
-  // const scrollHandler = throttle(() => {
-  //   if (loading ||
-  //     window.innerHeight + document.documentElement.scrollTop >= document.documentElement.offsetHeight
-  //   ) {
-  //     return;
-  //   }
-  //   loadEvents();
-  // }, 2000);
-
-  // 스크롤 이벤트 바인딩
-  // useEffect(() => {
-  //   window.addEventListener('scroll', scrollHandler);
-  //
-  //   return () => {
-  //     window.removeEventListener('scroll', scrollHandler);
-  //     scrollHandler.cancel(); // 스로틀 취소
-  //   }
-  // }, [currentPage, loading]);
 
   // 화면에 특정 박스가 보이면 다음 페이지를 로딩
   useEffect(() => {
@@ -130,20 +112,3 @@ const Events = () => {
 };
 
 export default Events;
-
-// loader를 app.js로부터 아웃소싱
-// export const loader = async () => {
-
-//   const response = await fetch('http://localhost:8282/events/page/1?sort=date');
-
-//   if (!response.ok) {
-//     const errorText = await response.text();
-//     throw json(
-//       { message: errorText },
-//       {
-//         status: response.status
-//       }
-//     );
-//   }
-//   return response; // ok일 경우 events[]
-// };
