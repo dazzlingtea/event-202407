@@ -50,22 +50,30 @@ const Events = () => {
 
     const updatedEvents = [...events, ...loadedEvents ];
     // console.log(updatedEvents);
-    setEvents(updatedEvents);
-    setLoading(false);
-    // 로딩이 끝나면 페이지번호를 1 늘려놓는다.
-    setCurrentPage(prevPage => prevPage + 1);
-    console.log('end loading!!');
-    // console.log('loadEvents: ', events, loading,  currentPage, isFinish);
 
-    // 로딩이 끝나면 더 이상 가져올게 있는지 여부를 체크한다.
-    setIsFinish(totalCount === updatedEvents.length);
+    // setter 있는 경우 지금 스냅샷, 변경 후 스냅샷을 비교해서 리렌더링 결정
+    setTimeout(()=>{
+      setLoading(false);
+      setEvents(updatedEvents); // 이걸 같은 타이머에 두지 않으면 여러번 리렌더링 발생
 
-    // 로딩 후 지금까지 불러온 데이터 개수(현재 렌더링된 개수)를 총 데이터 개수에서 차감
-    const restEventsCount = totalCount - updatedEvents.length;
+      // 타이머 시간만큼 스켈레톤 렌더링
+      // 로딩이 끝나면 페이지번호를 1 늘려놓는다.
+      setCurrentPage(prevPage => prevPage + 1);
+      console.log('end loading!!');
+      // console.log('loadEvents: ', events, loading,  currentPage, isFinish);
 
-    // skeleton 개수 구하기 -> 남은 개수가 4보다 크면 4로 세팅 4보다 작으면 그 수로 세팅
-    const skeletonCnt = Math.min(4, restEventsCount);
-    setSkeletonCount(skeletonCnt);
+      // 로딩이 끝나면 더 이상 가져올게 있는지 여부를 체크한다.
+      setIsFinish(totalCount === updatedEvents.length);
+
+      // 로딩 후 지금까지 불러온 데이터 개수(현재 렌더링된 개수)를 총 데이터 개수에서 차감
+      const restEventsCount = totalCount - updatedEvents.length;
+
+      // skeleton 개수 구하기 -> 남은 개수가 4보다 크면 4로 세팅 4보다 작으면 그 수로 세팅
+      const skeletonCnt = Math.min(4, restEventsCount);
+      setSkeletonCount(skeletonCnt);
+    }, 500);
+
+
   };
 
 
