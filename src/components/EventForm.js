@@ -149,6 +149,14 @@ export const action = async ({request, params}) => {
     body: JSON.stringify(payload)
   });
 
+  if(
+    request.method === 'POST'
+    && response.status === '401'
+  ) {
+    const errorText = await response.text();
+    alert(errorText);
+  }
+
   // useNavigate() 사용 불가... 컴포넌트 내부가 아니기 때문
   return redirect('/events');
 };
