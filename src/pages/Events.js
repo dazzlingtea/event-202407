@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useContext, useEffect, useRef, useState} from 'react';
 import EventList from '../components/EventList';
 import EventSkeleton from '../components/EventSkeleton';
 import {EVENT_URL} from "../config/host-config";
@@ -6,8 +6,11 @@ import {EVENT_URL} from "../config/host-config";
 // npm install loadsh
 import { debounce, throttle } from 'lodash';
 import {useRouteLoaderData} from "react-router-dom";
+import EventContext from "../components/context/event-context";
 
 const Events = () => {
+
+  const { changeTotalEventCount } = useContext(EventContext)
 
   // 로컬스토리지에서 토큰 가져오기
   const {token} = useRouteLoaderData('user-data');
@@ -45,6 +48,9 @@ const Events = () => {
       headers: {'Authorization': 'Bearer '+ token}
     });
     const { events: loadedEvents, totalCount } = await response.json();
+
+    // Context 전역 상태값 변경
+    changeTotalEventCount(totalCount);
 
     console.log('loaded: ', {loadedEvents, totalCount, len:loadedEvents.length});
 

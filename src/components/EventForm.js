@@ -43,35 +43,6 @@ const EventForm = ({method, event={}}) => {
     navigate('..'); // 상대경로 잘 작동
   };
 
-  // const submitHandler = (e) => {  // 액션함수가 처리할거라 주석처리
-  //   e.preventDefault();
-  //   // input 입력값 가져오기
-  //   const formData = new FormData(e.target);
-  //   // console.log('form: ', formData.get('title'));
-  //
-  //   // 서버에 보낼 데이터
-  //   const payload = {
-  //     title: formData.get('title'),
-  //     desc: formData.get('description') ,
-  //     imageUrl: formData.get('image') ,
-  //     beginDate: formData.get('date')
-  //   };
-  //   // console.log('payload: ', payload);
-  //
-  //   // 서버로 페칭
-  //   (async () => {
-  //     const response = await fetch(`http://localhost:8282/events`, {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: JSON.stringify(payload)
-  //     });
-  //     navigate('/events');
-  //   })();
-  //
-  // };
-
   // 2. aciton 함수를 트리거하려면 일반 form을 사용하면 안되고
   // 3. react-router-dom에서 제공하는 Form이라는 컴포넌트를 사용
   // 4. method 옵션을 설정한다.
