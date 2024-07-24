@@ -1,5 +1,5 @@
 
-const LOCAL_PORT = 8787; // 백엔드 로컬 서버 포트번호
+const LOCAL_PORT = 8989; // 백엔드 로컬 서버 포트번호
 
 // 예를들어 지금 요청하는 브라우저 호스트가 http://localhost:3000이라면
 // hostname은 localhost만 리턴
